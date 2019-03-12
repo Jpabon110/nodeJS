@@ -1,51 +1,35 @@
 const pool = require('../database');
+const model = require('../models/post');
 
 
 module.exports = {
-    create,
+    
     getAll,
     remove,
     editById,
     getById,
+    create,
 }
 
-async function create(req, res){
-    
-    const { title,author,description } = req.body;
-    const newLink = {
-        title,
-        author,
-        description
-    };
-
-    let post = await pool.query( ` 
-    INSERT INTO post 
-    set date_added = NOW(),  ?
-    `, [newLink]);
-    const insertPost = await pool.query('SELECT * FROM post WHERE post_id = '+ post.insertId);
-
-    if(!insertPost){
-        throw new Error('error al ingresar');
-    }else{
-        res.status(201).json(insertPost[0]);
-   }
-
-}
 
 async function getAll(req, res){
-    const post = await pool.query('SELECT * FROM post ORDER BY date_added DESC');
-    res.json(post);
+    
+    const post = await model.getAllPost()
+    console.log(post);
+    res.status(200).json(post);
 }
 
 async function getById(req, res){
     const { post_id } = req.params;
-    const post = await pool.query('SELECT * FROM post WHERE post_id ='+post_id+' ORDER BY date_added DESC');
+    const post = await model.findByIdPost(post_id);
     res.json(post);
 }
 
 async function remove(req, res){
     const { post_id } = req.params;
-    let saber = await pool.query('DELETE FROM post WHERE post_id = ?',[post_id]);
+    let saber = await model.removeIt(post_id);
+
+    console.log(saber);
 
      if(saber.affectedRows == 0){
         const info = {
@@ -67,7 +51,7 @@ async function editById(req, res){
         description
     };
 
-    const savIt = await pool.query('UPDATE post set ? WHERE post_id =?',[newPost,post_id]);
+    const savIt = await model.editByIdPost(newPost,post_id);
 
     if(savIt.affectedRows == 0){
         const info = {
@@ -77,5 +61,27 @@ async function editById(req, res){
     }else{
         res.sendStatus(204);         
     }  
+
+}
+
+//pruebas viejas (mala practica corregir)
+async function create(req, res){
+    
+    const { title,author,description } = req.body;
+    const newLink = {
+        title,
+        author,
+        description
+    };
+    
+    let post = await model.createIt(newLink);
+
+    const insertPost = model.findByIdPost(post.insertPost);
+
+    if(!insertPost){
+        throw new Error('error al ingresar');
+    }else{
+        res.status(201).json(insertPost[0]);
+   }
 
 }
