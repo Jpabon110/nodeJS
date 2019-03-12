@@ -1,0 +1,30 @@
+<div class="container p-4">
+    <div class="posteds">
+        {{#each post}}
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h3>{{ title }}</h3>
+                        </div>
+                        <p> {{ description }} </p>
+                        <p> {{ timeago date_added}} </p>
+                        <div class="card-footer">
+                            <a href="/links/delete/{{post_id}}" class="btn btn-danger"> Borrar post</a>
+                            <a href="/links/edit/{{post_id}}" class="btn btn-secondary"> Editar post</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{else}}
+                <div class="col-md-4 mx-auto">
+                    <div class="card card-body text-center">
+                        <p>
+                            No se encontraoron post!?.
+                        </p>
+                        <a href="/links/add"> Postea algo! </a>
+                    </div>
+                </div>
+        {{/each}}
+    </div>
+</div>

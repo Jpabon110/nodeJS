@@ -1,0 +1,29 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    {{!-- AQUI SE ENVIA INFORMACION POR POST DE FORMULARIO --}}
+                    {{!-- SE DEBE CREAR UNA RUTA EN EL ARCHIVO DE RUTAS QUE ESPECIFIQUE QUE TIPO DE ACCION REALIZARA, SI ES GET PARA MOSTAR ALGO  O POST PARA ENVIAR ALGO --}}
+                    <form action="/links/edit/{{oldInfo.post_id}}" method="POST"> 
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="title" value="{{oldInfo.title}}" placeholder="Title" autofocus>
+                        </div>
+                         <div class="form-group">
+                            <input type="text" class="form-control" name="url" placeholder="Url">
+                        </div>
+                        <div class="form-group"></div>
+                            <textarea  name="description"  rows="2" class="form-control" placeholder="description"> {{oldInfo.description}} </textarea>
+                        </div>
+                         <div class="form-group"></div>
+                            <button class="btn btn-success btn-block">
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
