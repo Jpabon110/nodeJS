@@ -1,5 +1,5 @@
 # nodeJS
-clonar el repositorio
-npm install
-nodemon run 
+clonar el repositorio,
+npm install,
+nodemon run, 
 listo
